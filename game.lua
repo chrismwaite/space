@@ -1,6 +1,6 @@
-require "planet"
+require "models.planet"
 require "helper"
-require "view_planet"
+require "views.planet_view"
 
 Game = {}
 

@@ -1,4 +1,4 @@
-require 'menu'
+require 'views.menu_view'
 require 'game'
 
 local menu = Menu.new()
