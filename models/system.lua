@@ -1,4 +1,4 @@
-require "planet"
+require "models.planet"
 
 System = {}
 
@@ -24,14 +24,18 @@ System.new = function(x, y, num_planets)
   self.setNumPlanets = function(arg) num_planets = arg end
   self.setPlanets = function(arg) planets = arg end
 
-  -- cutom methods
-  self.draw = function()
-    --love.graphics.setColor(red, green, blue, 255)
-    --love.graphics.circle("fill", x, y, radius, 100)
+  -- generation
+  self.generate = function ()
+    x = love.math.random(love.graphics.getWidth())
+    y = love.math.random(love.graphics.getHeight())
+    num_planets = love.math.random(1,5)
+
+    for i=1,num_planets do
+      local planet = Planet.new()
+      planet.generate()
+      table.insert(planets, planet)
+    end
   end
-
-  -- generate planets
-
 
   return self
 end

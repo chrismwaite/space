@@ -27,7 +27,8 @@ ViewPlanet.new = function()
     if is_active then
       love.graphics.setColor(255, 255, 255, 255)
       love.graphics.print(table_as_string(planet.getComposition()), 100, 0)
-      planet.draw()
+      love.graphics.setColor(planet.getRed(), planet.getGreen(), planet.getBlue(), 255)
+      love.graphics.circle("fill", planet.getX(), planet.getY(), planet.getRadius(), 100)
     end
   end
 
@@ -37,10 +38,11 @@ ViewPlanet.new = function()
   end
 
   -- input callbacks
-  self.mousepressed = function(x, y, button)
+  self.mousepressed = function(x, y, button, game)
     if is_active then
       if button == 'l' then
         if pointPresentInCircle(x, y, planet.getX(), planet.getY(), planet.getRadius()) then
+          game.getViewSystem().setIsActive(true)
           self.setIsActive(false)
         end
       end
