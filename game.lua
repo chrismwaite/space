@@ -1,7 +1,8 @@
-require "models.system"
+require "models.galaxy"
 require "helper"
 require "views.system_view"
 require "views.planet_view"
+require "views.galaxy_view"
 
 Game = {}
 
@@ -17,18 +18,20 @@ Game.new = function()
   test_random = love.math.random(1000)
   -- second number abides by seed
   test_random2 = love.math.random(1000)
-  -- planets table
-  local systems = {}
+  
+  local galaxies = {}
   local is_active = false
 
   -- views
   local view_planet = ViewPlanet.new()
   local view_system = ViewSystem.new()
+  local view_galaxy = ViewGalaxy.new()
 
   -- getters
   self.getIsActive = function() return is_active end
   self.getViewPlanet = function() return view_planet end
   self.getViewSystem = function() return view_system end
+  self.getViewGalaxy = function() return view_galaxy end
   
   -- setters
   self.setIsActive = function(arg) is_active = arg end
@@ -40,48 +43,68 @@ Game.new = function()
       love.graphics.print(seed, 0, 0)
 
       -- views
-      view_system.draw()
-      view_planet.draw()
+      if view_planet.getIsActive() == true then
+        view_planet.draw()
+      elseif view_system.getIsActive() == true then
+        view_system.draw()
+      elseif view_galaxy.getIsActive() == true then
+        view_galaxy.draw()
+      end
     end
   end
 
   self.update = function(dt)
     if is_active then
+      if view_system.getIsActive() == true then
+        view_system.update(dt)
+      end
     end
   end
 
   -- input callbacks
   self.mousepressed = function(x, y, button)
     if is_active then
-      view_planet.mousepressed(x, y, button, self)
-      view_system.mousepressed(x, y, button, self)
+      if view_planet.getIsActive() == true then
+        view_planet.mousepressed(x, y, button, self)
+      elseif view_system.getIsActive() == true then
+        view_system.mousepressed(x, y, button, self)
+      elseif view_galaxy.getIsActive() == true then
+        view_galaxy.mousepressed(x, y, button, self)
+      end
     end
   end
 
-  -- press 1, 2, or 3 to switch between systems. Currently there are 3
-  function self.keypressed(key)
-    if key == "1" then
-      view_system.setSystem(systems[1])
-    elseif key == "2" then
-      view_system.setSystem(systems[2])
-    elseif key == "3" then
-      view_system.setSystem(systems[3])
+  self.mousemoved = function( x, y, dx, dy )
+    if is_active then
+      if view_galaxy.getIsActive() == true then
+        view_galaxy.mousemoved(x, y, dx, dy)
+      end
+    end
+  end
+
+  self.keypressed = function(key)
+    if is_active then
+      if view_planet.getIsActive() == true then
+        view_planet.keypressed(key, self)
+      elseif view_system.getIsActive() == true then
+        view_system.keypressed(key, self)
+      elseif view_galaxy.getIsActive() == true then
+        view_galaxy.keypressed(key, self)
+      end
     end
   end
 
   -- initialisation functions
-  -- generate n systems
-  -- NOTE: The systems should only be generated when they are visited so this needs reworking
-  for i=1,3 do
-    local system = System.new()
-    system.generate()
-    table.insert(systems, system)
+  -- generate n galaxies
+  for i=1,1 do
+    local galaxy = Galaxy.new()
+    galaxy.generate()
+    table.insert(galaxies, galaxy)
   end
 
-  -- set the starting system
-  view_system.setSystem(systems[1])
-  -- force the system view to be active as we start in a system
-  view_system.setIsActive(true)
+  -- galaxy view is active & set starting galaxy
+  view_galaxy.setGalaxy(galaxies[1])
+  view_galaxy.setIsActive(true)
 
   return self
 end

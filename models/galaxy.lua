@@ -8,9 +8,9 @@ Galaxy.new = function(x, y, num_systems)
   -- variables
   local self = {}
   local systems = {}
-  x = x or 0
-  y = y or 0
-  num_systems = num_systems or 100
+  local x = x or 0
+  local y = y or 0
+  local num_systems = num_systems or 100
 
   -- getters
   self.getX = function() return x end
@@ -30,6 +30,7 @@ Galaxy.new = function(x, y, num_systems)
     y = love.math.random(love.graphics.getHeight())
     num_systems = love.math.random(50,100)
 
+    -- NOTE: The systems should only be generated when they are visited so this needs reworking
     for i=1,num_systems do
       local system = System.new()
       system.generate()

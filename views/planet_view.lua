@@ -40,11 +40,14 @@ ViewPlanet.new = function()
   -- input callbacks
   self.mousepressed = function(x, y, button, game)
     if is_active then
-      if button == 'l' then
-        if pointPresentInCircle(x, y, planet.getX(), planet.getY(), planet.getRadius()) then
-          game.getViewSystem().setIsActive(true)
-          self.setIsActive(false)
-        end
+    end
+  end
+
+  self.keypressed = function(key, game)
+    if is_active then
+      if key == "b" then
+        game.getViewSystem().setIsActive(true)
+        self.setIsActive(false)
       end
     end
   end

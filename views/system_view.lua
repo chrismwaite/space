@@ -32,6 +32,10 @@ ViewSystem.new = function()
 
   self.update = function(dt)
     if is_active then
+      planet_1 = system.getPlanets()[1]
+      --planet_1.setX((love.graphics.getWidth()/2) + 100*math.cos(planet_1.getX()+1));
+      --planet_1.setY((love.graphics.getHeight()/2) + 100*math.cos(planet_1.getY()+1)*0.005);
+
     end
   end
 
@@ -46,6 +50,15 @@ ViewSystem.new = function()
             self.setIsActive(false)
           end
         end
+      end
+    end
+  end
+
+  self.keypressed = function(key, game)
+    if is_active then
+      if key == "b" then
+        game.getViewGalaxy().setIsActive(true)
+        self.setIsActive(false)
       end
     end
   end
