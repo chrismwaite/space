@@ -8,7 +8,6 @@ ViewSystem.new = function()
   local self = {}
   local is_active = false
   local system = nil
-  local angle = 1
 
   -- getters
   self.getIsActive = function() return is_active end
@@ -23,6 +22,12 @@ ViewSystem.new = function()
   -- callbacks - draw the system
   self.draw = function()
     if is_active then
+      -- draw primary star
+      local primary_star = system.getPrimaryStar()
+      love.graphics.setColor(primary_star.getRed(), primary_star.getGreen(), primary_star.getBlue(), 255)
+      love.graphics.circle("fill", primary_star.getX(), primary_star.getY(), primary_star.getRadius(), 100)
+
+      -- draw planets
       for key,value in pairs(system.getPlanets()) do
         local planet = value
         love.graphics.setColor(planet.getRed(), planet.getGreen(), planet.getBlue(), 255)
@@ -43,16 +48,6 @@ ViewSystem.new = function()
           planet.setAngle(0)
         end
       end
-      --planet_1 = system.getPlanets()[1]
-      -- x = originX + sin(angle)*radius;
-      -- y = originY + cos(angle)*radius;
-      --planet_1.setX((love.graphics.getWidth()/2) + math.sin(angle) * 200)
-      --planet_1.setY((love.graphics.getHeight()/2) + math.cos(angle) * 200)
-      --if angle < 360 then
-      --  angle = angle + 0.01
-      --else
-      --  angle = 0
-      --end
     end
   end
 

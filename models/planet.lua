@@ -1,3 +1,5 @@
+require "helper"
+
 Planet = {}
 
 Planet.new = function(x, y, radius, red, green, blue)
@@ -80,12 +82,18 @@ Planet.new = function(x, y, radius, red, green, blue)
     return new_composition
   end
 
-  -- generation
+  -- generation methods
+
+  -- default planet
   self.generate = function ()
     -- generate topography
-    red = love.math.random(1,255)
-    green = love.math.random(1,255)
-    blue = love.math.random(1,255)
+
+    -- colour
+    local colour = randomColourFromMixer(255,255,255)
+    red = colour['r']
+    green = colour['g']
+    blue = colour['b']
+
     radius = love.math.random(10,50)
 
     -- generate position
@@ -96,6 +104,19 @@ Planet.new = function(x, y, radius, red, green, blue)
 
     -- generate composition
     self.setComposition(self.generate_composition())
+  end
+
+  -- primary star
+  self.generatePrimary = function ()
+    x = love.graphics.getWidth()/2
+    y = love.graphics.getHeight()/2
+
+    local colour = randomColourFromMixer(255,255,255)
+    red = 255
+    green = 250
+    blue = colour['b']
+
+    radius = love.math.random(30,50)
   end
 
   return self

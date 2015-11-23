@@ -8,6 +8,7 @@ System.new = function(x, y, num_planets)
   -- variables
   local self = {}
   local planets = {}
+  local primary_star = nil
   local x = x or 0
   local y = y or 0
   local radius = radius or 0
@@ -23,6 +24,7 @@ System.new = function(x, y, num_planets)
   self.getLuminosity = function() return luminosity end
   self.getNumPlanets = function () return num_planets end
   self.getPlanets = function () return planets end
+  self.getPrimaryStar = function () return primary_star end
   
   -- setters
   self.setX = function(arg) x = arg end
@@ -34,6 +36,7 @@ System.new = function(x, y, num_planets)
 
   -- generation
   self.generate = function ()
+    -- system generation variables
     x = love.math.random(love.graphics.getWidth())
     y = love.math.random(love.graphics.getHeight())
     radius = love.math.random(1,3)
@@ -41,6 +44,13 @@ System.new = function(x, y, num_planets)
     luminosity = love.math.random(50,255)
     num_planets = love.math.random(1,5)
 
+    -- create the planets
+
+    -- primary star
+    primary_star = Planet.new()
+    primary_star.generatePrimary()
+
+    -- planets
     for i=1,num_planets do
       local planet = Planet.new()
       planet.generate()

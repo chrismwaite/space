@@ -17,3 +17,17 @@ function pointPresentInCircle(pointX, pointY, objectX, objectY, radius)
   end
   return false
 end
+
+function randomColourFromMixer(red, green, blue)
+  local randomColour = {}
+  randomColour['r'] = love.math.random(1,255)
+  randomColour['g'] = love.math.random(1,255)
+  randomColour['b'] = love.math.random(1,255)
+
+  local newColour = {}
+  newColour['r'] = (randomColour['r'] + red)/2
+  newColour['g'] = (randomColour['g'] + green)/2
+  newColour['b'] = (randomColour['b'] + blue)/2
+
+  return newColour
+end
