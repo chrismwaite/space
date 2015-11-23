@@ -8,6 +8,7 @@ ViewSystem.new = function()
   local self = {}
   local is_active = false
   local system = nil
+  local angle = 1
 
   -- getters
   self.getIsActive = function() return is_active end
@@ -32,10 +33,26 @@ ViewSystem.new = function()
 
   self.update = function(dt)
     if is_active then
-      planet_1 = system.getPlanets()[1]
-      --planet_1.setX((love.graphics.getWidth()/2) + 100*math.cos(planet_1.getX()+1));
-      --planet_1.setY((love.graphics.getHeight()/2) + 100*math.cos(planet_1.getY()+1)*0.005);
-
+      for key, value in pairs(system.getPlanets()) do
+        local planet = value
+        planet.setX((love.graphics.getWidth()/2) + math.sin(planet.getAngle()) * planet.getDistance())
+        planet.setY((love.graphics.getHeight()/2) + math.cos(planet.getAngle()) * planet.getDistance())
+        if planet.getAngle() < 360 then
+          planet.setAngle(planet.getAngle()+planet.getSpeed())
+        else
+          planet.setAngle(0)
+        end
+      end
+      --planet_1 = system.getPlanets()[1]
+      -- x = originX + sin(angle)*radius;
+      -- y = originY + cos(angle)*radius;
+      --planet_1.setX((love.graphics.getWidth()/2) + math.sin(angle) * 200)
+      --planet_1.setY((love.graphics.getHeight()/2) + math.cos(angle) * 200)
+      --if angle < 360 then
+      --  angle = angle + 0.01
+      --else
+      --  angle = 0
+      --end
     end
   end
 

@@ -5,8 +5,15 @@ Planet.new = function(x, y, radius, red, green, blue)
   -- variables
   local self = {}
   local composition = {}
+  
+  -- positioning
   local x = x or 0
   local y = y or 0
+  local angle = angle or 0
+  local distance = distance or 0
+  local speed = speed or 0
+  
+  -- appearance
   local radius = radius or 0
   local red = red or 0
   local green = green or 0
@@ -15,7 +22,10 @@ Planet.new = function(x, y, radius, red, green, blue)
   -- getters
   self.getX = function() return x end
   self.getY = function() return y end
+  self.getAngle = function() return angle end
   self.getRadius = function() return radius end
+  self.getDistance = function() return distance end
+  self.getSpeed = function() return speed end
   self.getRed = function() return red end
   self.getGreen = function() return green end
   self.getBlue = function() return blue end
@@ -24,7 +34,10 @@ Planet.new = function(x, y, radius, red, green, blue)
   -- setters
   self.setX = function(arg) x = arg end
   self.setY = function(arg) y = arg end
+  self.setAngle = function(arg) angle = arg end
   self.setRadius = function(arg) radius = arg end
+  self.setDistance = function(arg) distance = arg end
+  self.setSpeed = function(arg) speed = arg end
   self.setRed = function(arg) red = arg end
   self.setGreen = function(arg) green = arg end
   self.setBlue = function(arg) blue = arg end
@@ -73,9 +86,13 @@ Planet.new = function(x, y, radius, red, green, blue)
     red = love.math.random(1,255)
     green = love.math.random(1,255)
     blue = love.math.random(1,255)
+    radius = love.math.random(10,50)
+
+    -- generate position
     x = love.math.random(love.graphics.getWidth())
     y = love.math.random(love.graphics.getHeight())
-    radius = love.math.random(10,50)
+    distance = love.math.random(100,400)
+    speed = love.math.random(5,20)*0.001
 
     -- generate composition
     self.setComposition(self.generate_composition())
