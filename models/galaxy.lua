@@ -3,7 +3,7 @@ require "models.system"
 Galaxy = {}
 
 -- x, y are coordinates in the universe?
-Galaxy.new = function(x, y, num_systems)
+Galaxy.new = function()
   
   -- variables
   local self = {}

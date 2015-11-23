@@ -32,12 +32,20 @@ ViewSystem.new = function()
         local planet = value
         love.graphics.setColor(planet.getRed(), planet.getGreen(), planet.getBlue(), 255)
         love.graphics.circle("fill", planet.getX(), planet.getY(), planet.getRadius(), 100)
+
+        -- draw moons
+        for k,v in pairs(planet.getMoons()) do
+          local moon = v
+          love.graphics.setColor(moon.getRed(), moon.getGreen(), moon.getBlue(), 255)
+          love.graphics.circle("fill", moon.getX(), moon.getY(), moon.getRadius(), 100)
+        end
       end
     end
   end
 
   self.update = function(dt)
     if is_active then
+      -- update planets
       for key, value in pairs(system.getPlanets()) do
         local planet = value
         planet.setX((love.graphics.getWidth()/2) + math.sin(planet.getAngle()) * planet.getDistance())
@@ -46,6 +54,18 @@ ViewSystem.new = function()
           planet.setAngle(planet.getAngle()+planet.getSpeed())
         else
           planet.setAngle(0)
+        end
+
+        -- update moons
+        for k,v in pairs(planet.getMoons()) do
+          local moon = v
+          moon.setX(planet.getX() + math.sin(moon.getAngle()) * moon.getDistance())
+          moon.setY(planet.getY() + math.cos(moon.getAngle()) * moon.getDistance())
+          if moon.getAngle() < 360 then
+            moon.setAngle(moon.getAngle()+moon.getSpeed())
+          else
+            moon.setAngle(0)
+          end
         end
       end
     end

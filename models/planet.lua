@@ -1,4 +1,5 @@
 require "helper"
+require "models.moon"
 
 Planet = {}
 
@@ -7,6 +8,7 @@ Planet.new = function(x, y, radius, red, green, blue)
   -- variables
   local self = {}
   local composition = {}
+  local moons = {}
   
   -- positioning
   local x = x or 0
@@ -32,6 +34,7 @@ Planet.new = function(x, y, radius, red, green, blue)
   self.getGreen = function() return green end
   self.getBlue = function() return blue end
   self.getComposition = function () return composition end
+  self.getMoons = function () return moons end
   
   -- setters
   self.setX = function(arg) x = arg end
@@ -44,6 +47,7 @@ Planet.new = function(x, y, radius, red, green, blue)
   self.setGreen = function(arg) green = arg end
   self.setBlue = function(arg) blue = arg end
   self.setComposition = function(arg) composition = arg end
+  self.setMoons = function(arg) moons = arg end
 
   -- composition
   self.generate_composition = function()
@@ -104,6 +108,22 @@ Planet.new = function(x, y, radius, red, green, blue)
 
     -- generate composition
     self.setComposition(self.generate_composition())
+
+    -- generate moons
+    local num_moons = love.math.random(0,2)
+    for i=1,num_moons do
+      local moon = Moon.new()
+      moon.generate()
+      -- the position should match the planet
+      moon.setX(x)
+      moon.setY(y)
+      -- the distance should be the radius of the planet + the radius of the moon + a bit
+      -- but actually randum
+      moon.setDistance(love.math.random(radius+moon.getRadius()+10,radius+moon.getRadius()+40))
+      -- the radius should be a percentage of the planet radius
+      moon.setRadius(0.25*radius)
+      table.insert(moons, moon)
+    end
   end
 
   -- primary star
