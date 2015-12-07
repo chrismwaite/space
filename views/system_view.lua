@@ -48,8 +48,8 @@ ViewSystem.new = function()
       -- update planets
       for key, value in pairs(system.getPlanets()) do
         local planet = value
-        planet.setX((love.graphics.getWidth()/2) + math.sin(planet.getAngle()) * planet.getDistance())
-        planet.setY((love.graphics.getHeight()/2) + math.cos(planet.getAngle()) * planet.getDistance())
+        planet.setX((love.window.getWidth()/2) + math.sin(planet.getAngle()) * planet.getDistance())
+        planet.setY((love.window.getHeight()/2) + math.cos(planet.getAngle()) * planet.getDistance())
         if planet.getAngle() < 360 then
           planet.setAngle(planet.getAngle()+planet.getSpeed())
         else

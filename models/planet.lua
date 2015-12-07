@@ -101,8 +101,8 @@ Planet.new = function(x, y, radius, red, green, blue)
     radius = love.math.random(10,50)
 
     -- generate position
-    x = love.math.random(love.graphics.getWidth())
-    y = love.math.random(love.graphics.getHeight())
+    x = love.math.random(love.window.getWidth())
+    y = love.math.random(love.window.getHeight())
     distance = love.math.random(100,400)
     speed = love.math.random(5,20)*0.001
 
@@ -128,8 +128,8 @@ Planet.new = function(x, y, radius, red, green, blue)
 
   -- primary star
   self.generatePrimary = function ()
-    x = love.graphics.getWidth()/2
-    y = love.graphics.getHeight()/2
+    x = love.window.getWidth()/2
+    y = love.window.getHeight()/2
 
     local colour = randomColourFromMixer(255,255,255)
     red = 255

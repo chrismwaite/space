@@ -5,7 +5,10 @@ local menu = Menu.new()
 local game = Game.new()
 
 function love.load()
+  love.window.setFullscreen(true, "desktop")
   menu.setIsActive(true)
+  -- load the game
+  game.load()
 end
 
 function love.update(dt)

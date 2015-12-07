@@ -15,8 +15,8 @@ Menu.new = function()
   self.draw = function()
     if is_active then
       love.graphics.setColor(255, 255, 255, 255)
-      love.graphics.print("Space trading and mining", love.graphics.getWidth()/2, love.graphics.getHeight()/2)
-      love.graphics.print("(Click to begin)", love.graphics.getWidth()/2, (love.graphics.getHeight()/2)+20)
+      love.graphics.print("Space trading and mining", love.window.getWidth()/2, love.window.getHeight()/2)
+      love.graphics.print("(Click to begin)", love.window.getWidth()/2, (love.window.getHeight()/2)+20)
     end
   end
 

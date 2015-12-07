@@ -37,8 +37,8 @@ System.new = function()
   -- generation
   self.generate = function ()
     -- system generation variables
-    x = love.math.random(love.graphics.getWidth())
-    y = love.math.random(love.graphics.getHeight())
+    x = love.math.random(love.window.getWidth())
+    y = love.math.random(love.window.getHeight())
     radius = love.math.random(1,3)
     original_radius = radius
     luminosity = love.math.random(50,255)

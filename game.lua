@@ -91,20 +91,27 @@ Game.new = function()
       elseif view_galaxy.getIsActive() == true then
         view_galaxy.keypressed(key, self)
       end
+
+      -- escape key quits
+      if key == 'escape' then
+        love.event.quit()
+      end
     end
   end
 
-  -- initialisation functions
-  -- generate n galaxies
-  for i=1,1 do
-    local galaxy = Galaxy.new()
-    galaxy.generate()
-    table.insert(galaxies, galaxy)
-  end
+  self.load = function()
+    -- initialisation functions
+    -- generate n galaxies
+    for i=1,1 do
+      local galaxy = Galaxy.new()
+      galaxy.generate()
+      table.insert(galaxies, galaxy)
+    end
 
-  -- galaxy view is active & set starting galaxy
-  view_galaxy.setGalaxy(galaxies[1])
-  view_galaxy.setIsActive(true)
+    -- galaxy view is active & set starting galaxy
+    view_galaxy.setGalaxy(galaxies[1])
+    view_galaxy.setIsActive(true)
+  end
 
   return self
 end

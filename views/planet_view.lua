@@ -18,9 +18,9 @@ ViewPlanet.new = function()
   self.setPlanet = function(arg)
     planet = Planet.new(arg.getX(),arg.getY(),arg.getRadius(),arg.getRed(),arg.getGreen(),arg.getBlue())
     planet.setComposition(arg.getComposition())
-    planet.setRadius(love.graphics.getHeight()/2)
+    planet.setRadius(love.window.getHeight()/2)
     planet.setX(0)
-    planet.setY(love.graphics.getHeight()/2)
+    planet.setY(love.window.getHeight()/2)
   end
 
   self.draw = function()

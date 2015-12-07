@@ -26,8 +26,8 @@ Galaxy.new = function()
 
   -- generation
   self.generate = function ()
-    x = love.math.random(love.graphics.getWidth())
-    y = love.math.random(love.graphics.getHeight())
+    x = love.math.random(love.window.getWidth())
+    y = love.math.random(love.window.getHeight())
     num_systems = love.math.random(50,100)
 
     -- NOTE: The systems should only be generated when they are visited so this needs reworking
