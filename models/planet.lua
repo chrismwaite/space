@@ -1,5 +1,6 @@
 require "helper"
 require "models.moon"
+require "models.site"
 
 Planet = {}
 
@@ -9,6 +10,8 @@ Planet.new = function(x, y, radius, red, green, blue)
   local self = {}
   local composition = {}
   local moons = {}
+  -- these are randomly generated points on the planet that can be mined etc.
+  local sites = {}
   
   -- positioning
   local x = x or 0
@@ -35,6 +38,7 @@ Planet.new = function(x, y, radius, red, green, blue)
   self.getBlue = function() return blue end
   self.getComposition = function () return composition end
   self.getMoons = function () return moons end
+  self.getSites = function () return sites end
   
   -- setters
   self.setX = function(arg) x = arg end
@@ -48,6 +52,7 @@ Planet.new = function(x, y, radius, red, green, blue)
   self.setBlue = function(arg) blue = arg end
   self.setComposition = function(arg) composition = arg end
   self.setMoons = function(arg) moons = arg end
+  self.setSites = function(arg) sites = arg end
 
   -- composition
   self.generate_composition = function()
@@ -86,6 +91,15 @@ Planet.new = function(x, y, radius, red, green, blue)
     return new_composition
   end
 
+  self.generateSites = function()
+    local num_sites = love.math.random(5,20)
+    for i=1,num_sites do
+      local site = Site.new()
+      site.generate(composition)
+      table.insert(sites, site)
+    end
+  end
+
   -- generation methods
 
   -- default planet
@@ -104,7 +118,7 @@ Planet.new = function(x, y, radius, red, green, blue)
     x = love.math.random(love.window.getWidth())
     y = love.math.random(love.window.getHeight())
     distance = love.math.random(100,400)
-    speed = love.math.random(5,20)*0.001
+    speed = love.math.random(5,20)*0.0002
 
     -- generate composition
     self.setComposition(self.generate_composition())
@@ -124,6 +138,10 @@ Planet.new = function(x, y, radius, red, green, blue)
       moon.setRadius(0.25*radius)
       table.insert(moons, moon)
     end
+
+    -- generate sites
+    -- this determines the access to the elements that form the composition
+    self.generateSites()
   end
 
   -- primary star

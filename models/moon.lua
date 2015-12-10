@@ -52,7 +52,7 @@ Moon.new = function()
     blue = 255
     radius = 10
     distance = 50
-    speed = love.math.random(10,40)*0.001
+    speed = love.math.random(10,40)*0.0002
   end
 
   return self
