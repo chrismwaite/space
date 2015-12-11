@@ -18,6 +18,13 @@ function pointPresentInCircle(pointX, pointY, objectX, objectY, radius)
   return false
 end
 
+function pointPresentInButton(pointX, pointY, button)
+  if pointX > button.getX() and pointX < (button.getX()+button.getWidth()) and pointY > button.getY() and pointY < (button.getY()+button.getHeight()) then
+    return true
+  end
+  return false
+end
+
 function randomColourFromMixer(red, green, blue)
   local randomColour = {}
   randomColour['r'] = love.math.random(1,255)

@@ -111,6 +111,9 @@ Game.new = function()
     -- galaxy view is active & set starting galaxy
     view_galaxy.setGalaxy(galaxies[1])
     view_galaxy.setIsActive(true)
+
+    -- some views require assets to be loaded
+    view_planet.load()
   end
 
   return self

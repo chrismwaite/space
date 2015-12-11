@@ -1,4 +1,6 @@
 require "helper"
+require "models.button"
+require "models.scanner"
 
 ViewPlanet = {}
 
@@ -10,6 +12,14 @@ ViewPlanet.new = function()
   local planet = nil
   local current_site = nil
 
+  -- mode e.g. scan etc
+  local mode = nil
+  -- drones
+  local scanners = {}
+
+  -- interface
+  local buttons = {}
+
   -- getters
   self.getIsActive = function() return is_active end
   self.getPlanet = function() return planet end
@@ -20,13 +30,16 @@ ViewPlanet.new = function()
 
   self.draw = function()
     if is_active then
+      -- composition string
       love.graphics.setColor(255, 255, 255, 255)
       love.graphics.print(table_as_string(planet.getComposition()), 100, 0)
       
+      -- current site composition string
       if current_site ~= nil then
         love.graphics.print(table_as_string(current_site.getElements()), 400, 300)
       end
       
+      -- planet
       love.graphics.setColor(planet.getRed(), planet.getGreen(), planet.getBlue(), 255)
       love.graphics.circle("fill", 0, love.window.getHeight()/2, love.window.getHeight()/2, 100)
 
@@ -47,9 +60,20 @@ ViewPlanet.new = function()
         else
           love.graphics.setColor(colour)
         end
-        love.graphics.circle("fill", site.getX(), site.getY(), 10, 5)
+        love.graphics.circle("fill", site.getX(), site.getY(), site.getRadius(), 10)
+      end
+
+      -- buttons
+      for key,value in pairs(buttons) do
+        value.draw()
       end
     end
+  end
+
+  self.load = function()
+    -- buttons
+    local scan_button = Button.new("scan", love.window.getWidth()-100, 20, 80, 20, {255, 255, 255, 255}, "Scan", {0, 0, 0, 255})
+    table.insert(buttons, scan_button)
   end
 
   self.update = function(dt)
@@ -64,6 +88,15 @@ ViewPlanet.new = function()
         for key,value in pairs(planet.getSites()) do
           if pointPresentInCircle(x, y, value.getX(), value.getY(), 10) then
             current_site = value
+          end
+        end
+
+        for key,value in pairs(buttons) do
+          if pointPresentInButton(x, y, value) then
+            local button = value
+            if button.getTag() == "scan" then
+              love.mouse.setCursor(love.mouse.getSystemCursor("crosshair"))
+            end
           end
         end
       end
